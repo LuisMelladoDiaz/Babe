@@ -1,0 +1,40 @@
+<!-- babe/home.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+        }
+        .message {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .heart {
+            color: red;
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        Hola {{ username }}, 
+        {% if dias_con_pareja is not None %}
+            llevas {{ dias_con_pareja }} días con {{pareja}} <span class="heart">❤️</span>
+        {% else %}
+            aún no tienes una relación registrada <span class="heart">💔</span>
+        {% endif %}
+    </div>
+</body>
+</html>
