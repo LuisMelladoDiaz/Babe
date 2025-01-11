@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+.env
+*.env
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de paquetes y dependencias
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Archivos de prueba y cobertura
+.coverage
+*.cover
+*.py,cover
+.hypothesis/
+
+# Archivos de configuración
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Otros
+.DS_Store
+Thumbs.db
