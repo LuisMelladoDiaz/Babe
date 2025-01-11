@@ -40,3 +40,6 @@ pip-delete-this-directory.txt
 # Otros
 .DS_Store
 Thumbs.db
+
+__pycache__/
+*.pyc
