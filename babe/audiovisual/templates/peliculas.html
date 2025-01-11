@@ -1,6 +1,6 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Página Principal{% endblock %}
+{% block title %}Listado de Películas{% endblock %}
 
 {% block content %}
 <head>
@@ -11,49 +11,98 @@
             font-size: x-large;
             font-weight: bolder;
             text-transform: uppercase;
-            
-
         }
-        .titulopelicula:first-letter{
+
+        .titulopelicula:first-letter {
             font-size: xx-large;
         }
-        .fechapelicula{
-            
+
+        /* Grid para 4 columnas */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+            gap: 20px; /* Espacio entre las tarjetas */
+            padding: 20px;
+            list-style: none;
         }
+
         .contenedor {
-            border-bottom-right-radius: 10%;
-            width: 300px;
-            height: 380px;
+            border-radius: 10%;
+            width: 100%;
+            max-width: 300px;
+            height: 400px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+            background-color: #fff;
+        }
 
+        .contenedor img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* Ajusta la imagen al tamaño del contenedor */
+            border-radius: 10%;
+        }
 
+        .contenedor a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
 
+        .contenedor a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Películas</title>
 </head>
 <body>
     <h1>Listado de Películas</h1>
-    <ul>
+    <ul class="grid-container">
         {% for pelicula in peliculas %}
             <li>
                 <div class="contenedor">
-                    <div class="titulopelicula">
-                        {{ pelicula.titulo }} 
-                    </div><br>
-                    {{pelicula.fecha}}<br>
-                    {{ pelicula.genero }}<br>
-                    {{pelicula.cine}}<br>
-                    {{ pelicula.puntuacionM }} - {{ pelicula.puntuacionF }}<br>
 
-                    <a href="{% url 'editar_pelicula' pelicula.id %}">Editar</a>  </div>
+                    {% if pelicula.foto %}
+                        <img src="{{ pelicula.foto.url }}" alt="{{ pelicula.titulo }}">
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}audiovisuals/imagen_generica.jpg" alt="Imagen genérica">
+                    {% endif %}
+                    
+                    <div class="titulopelicula">{{ pelicula.titulo }}</div>
+                    <p>{{ pelicula.fecha }}</p>
+                    <p><strong>Género:</strong> {{ pelicula.genero }}</p>
+                    <p><strong>Cine:</strong> {{ pelicula.cine|yesno:"Sí,No" }}</p>
+                    <p><strong>Puntuación:</strong> {{ pelicula.puntuacionM }} - {{ pelicula.puntuacionF }}</p>
+                    
+                    <!-- Botón Editar -->
+                    <a href="{% url 'editar_pelicula' pelicula.id %}">Editar</a>
+                </div>
             </li>
         {% empty %}
             <li>No hay películas disponibles.</li>
         {% endfor %}
     </ul>
 
-    <a href="{% url 'agregar_pelicula' %}">Añadir nueva película</a>  <!-- Botón para añadir película -->
+    <!-- Botón para añadir película -->
+    <a href="{% url 'agregar_pelicula' %}" class="contenedor">Añadir nueva película</a>
 </body>
-{% endblock%}
+{% endblock %}

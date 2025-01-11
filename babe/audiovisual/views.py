@@ -1,9 +1,12 @@
+from tkinter import PIESLICE
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pelicula, Videojuego
 from .forms import *
 
 def lista_peliculas(request):
     peliculas = Pelicula.objects.all()  # Obtener todas las películas
+    for p in peliculas:
+        print(p.foto)
     return render(request, 'peliculas.html', {'peliculas': peliculas})
 
 def lista_videojuegos(request):

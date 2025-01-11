@@ -5,7 +5,7 @@ class Audiovisual(models.Model):
     puntuacionM = models.DecimalField(max_digits=3, decimal_places=1, default=0)  # Puntuación masculina (0-10)
     puntuacionF = models.DecimalField(max_digits=3, decimal_places=1, default=0)  # Puntuación femenina (0-10)
     galardonado = models.BooleanField(default=False)
-    foto = models.ImageField(upload_to='audiovisuals/%Y/%m/%d/', blank=True, null=True)
+    foto = models.ImageField(upload_to='audiovisuals/%Y/%m/%d/', blank=True, null=True, default='audiovisuals/imagen_generica.jpg')
     fecha = models.DateField(blank=True, null=True)
 
     def media(self):

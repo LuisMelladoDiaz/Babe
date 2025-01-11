@@ -125,3 +125,7 @@ STATIC_URL = '/static/'
 ## MODIFICADO
 
 LOGIN_URL = '/account/login/'
+
+MEDIA_URL = '/media/'  # URL base para acceder a archivos multimedia desde el navegador
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Ruta física donde se guardarán los archivos
+
