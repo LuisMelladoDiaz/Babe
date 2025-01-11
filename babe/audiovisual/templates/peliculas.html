@@ -1,0 +1,28 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Página Principal{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Películas</title>
+</head>
+<body>
+    <h1>Listado de Películas</h1>
+    <ul>
+        {% for pelicula in peliculas %}
+            <li>
+                <strong>{{ pelicula.titulo }}</strong><br>
+                Género: {{ pelicula.genero }}<br>
+                Puntuación: {{ pelicula.puntuacionM }} - {{ pelicula.puntuacionF }}<br>
+                <a href="{% url 'editar_pelicula' pelicula.id %}">Editar</a>  <!-- Botón para editar la película -->
+            </li>
+        {% empty %}
+            <li>No hay películas disponibles.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'agregar_pelicula' %}">Añadir nueva película</a>  <!-- Botón para añadir película -->
+</body>
+{% endblock%}

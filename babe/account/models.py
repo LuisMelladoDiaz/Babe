@@ -13,17 +13,15 @@ class Profile(models.Model):
 
 
 class Couple(models.Model):
-    novio = models.ForeignKey(
+    novio = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='novio_couple',
-        unique=True
+        related_name='novio_couple'
     )
-    novia = models.ForeignKey(
+    novia = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='novia_couple',
-        unique=True
+        related_name='novia_couple'
     )
     aniversario = models.DateField(blank=True, null=True)
     foto = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)

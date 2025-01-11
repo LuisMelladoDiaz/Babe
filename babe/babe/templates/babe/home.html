@@ -1,21 +1,10 @@
-<!-- babe/home.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
+{% extends 'navbar.html' %}
+
+{% block title %}Página Principal{% endblock %}
+
+{% block content %}
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #333333;
-        }
+        
         .message {
             text-align: center;
             font-size: 24px;
@@ -25,16 +14,37 @@
             color: red;
             font-size: 28px;
         }
+        .buttons {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-peliculas {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-videojuegos {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
     </style>
-</head>
-<body>
+
     <div class="message">
-        Hola {{ username }}, 
+        Hola {{ username }},
         {% if dias_con_pareja is not None %}
-            llevas {{ dias_con_pareja }} días con {{pareja}} <span class="heart">❤️</span>
+            llevas {{ dias_con_pareja }} días con {{ pareja }} <span class="heart">❤️</span>
         {% else %}
             aún no tienes una relación registrada <span class="heart">💔</span>
         {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}

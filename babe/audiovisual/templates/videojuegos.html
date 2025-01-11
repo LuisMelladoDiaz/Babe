@@ -1,0 +1,30 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Página Principal{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Videojuegos</title>
+</head>
+<body>
+    <h1>Listado de Videojuegos</h1>
+    <ul>
+        {% for videojuego in videojuegos %}
+            <li>
+                <strong>{{ videojuego.titulo }}</strong><br>
+                Género: {{ videojuego.genero }}<br>
+                Puntuación: {{ videojuego.puntuacionM }} - {{ videojuego.puntuacionF }}<br>
+                Dificultad: {{ videojuego.dificultad }}<br>
+                Horas jugadas: {{ videojuego.horas_jugadas }}<br>
+                <a href="{% url 'editar_videojuego' videojuego.id %}">Editar</a>  <!-- Botón para editar el videojuego -->
+            </li>
+        {% empty %}
+            <li>No hay videojuegos disponibles.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'agregar_videojuego' %}">Añadir nuevo videojuego</a>  <!-- Botón para añadir videojuego -->
+</body>
+{% endblock %}

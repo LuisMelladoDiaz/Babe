@@ -1,0 +1,22 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Página Principal{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Videojuego</title>
+</head>
+<body>
+    <h1>Añadir nuevo videojuego</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Añadir videojuego</button>
+    </form>
+    
+    <a href="{% url 'lista_videojuegos' %}">Volver al listado</a>
+</body>
+{% endblock %}
