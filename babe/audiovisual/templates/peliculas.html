@@ -4,6 +4,31 @@
 
 {% block content %}
 <head>
+    <style>
+        .titulopelicula {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: rgb(46, 41, 133);
+            font-size: x-large;
+            font-weight: bolder;
+            text-transform: uppercase;
+            
+
+        }
+        .titulopelicula:first-letter{
+            font-size: xx-large;
+        }
+        .fechapelicula{
+            
+        }
+        .contenedor {
+            border-bottom-right-radius: 10%;
+            width: 300px;
+            height: 380px;
+
+
+
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Películas</title>
@@ -13,10 +38,16 @@
     <ul>
         {% for pelicula in peliculas %}
             <li>
-                <strong>{{ pelicula.titulo }}</strong><br>
-                Género: {{ pelicula.genero }}<br>
-                Puntuación: {{ pelicula.puntuacionM }} - {{ pelicula.puntuacionF }}<br>
-                <a href="{% url 'editar_pelicula' pelicula.id %}">Editar</a>  <!-- Botón para editar la película -->
+                <div class="contenedor">
+                    <div class="titulopelicula">
+                        {{ pelicula.titulo }} 
+                    </div><br>
+                    {{pelicula.fecha}}<br>
+                    {{ pelicula.genero }}<br>
+                    {{pelicula.cine}}<br>
+                    {{ pelicula.puntuacionM }} - {{ pelicula.puntuacionF }}<br>
+
+                    <a href="{% url 'editar_pelicula' pelicula.id %}">Editar</a>  </div>
             </li>
         {% empty %}
             <li>No hay películas disponibles.</li>
