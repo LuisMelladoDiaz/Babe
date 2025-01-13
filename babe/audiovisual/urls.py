@@ -9,7 +9,10 @@ urlpatterns = [
     path('agregar_pelicula/', views.agregar_pelicula, name='agregar_pelicula'),
     path('agregar_videojuego/', views.agregar_videojuego, name='agregar_videojuego'),
     path('editar_pelicula/<int:pelicula_id>/', views.editar_pelicula, name='editar_pelicula'),
-    path('editar_videojuego/<int:videojuego_id>/', views.editar_videojuego, name='editar_videojuego'), 
+    path('editar_videojuego/<int:videojuego_id>/', views.editar_videojuego, name='editar_videojuego'),
+    path('eliminar_pelicula/<int:pelicula_id>/', views.eliminar_pelicula, name='eliminar_pelicula'),
+    path('eliminar_videojuego/<int:videojuego_id>/', views.eliminar_videojuego, name='eliminar_videojuego'),
+
 ]
 
 if settings.DEBUG:

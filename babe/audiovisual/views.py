@@ -1,7 +1,9 @@
 from tkinter import PIESLICE
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from .models import Pelicula, Videojuego
 from .forms import *
+from django.urls import reverse
+
 
 def lista_peliculas(request):
     peliculas = Pelicula.objects.all()  # Obtener todas las películas
@@ -56,3 +58,13 @@ def editar_videojuego(request, videojuego_id):
         form = VideojuegoForm(instance=videojuego)  # Pre-cargar el formulario con los datos del videojuego
     
     return render(request, 'editar_videojuego.html', {'form': form, 'videojuego': videojuego})
+
+def eliminar_pelicula(request, pelicula_id):
+    pelicula = get_object_or_404(Pelicula, id=pelicula_id)
+    pelicula.delete()
+    return HttpResponseRedirect(reverse('lista_peliculas'))
+
+def eliminar_videojuego(request, videojuego_id):
+    videojuego = get_object_or_404(Videojuego, id=videojuego_id)
+    videojuego.delete()
+    return HttpResponseRedirect(reverse('lista_videojuegos'))

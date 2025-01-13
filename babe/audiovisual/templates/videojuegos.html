@@ -1,30 +1,50 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Página Principal{% endblock %}
+{% block title %}Listado de Videojuegos{% endblock %}
 
 {% block content %}
+{% load static %}
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Videojuegos</title>
 </head>
 <body>
-    <h1>Listado de Videojuegos</h1>
-    <ul>
+    <div class="titulo_pagina">Videojuegos</div>
+    <ul class="grid-container">
         {% for videojuego in videojuegos %}
             <li>
-                <strong>{{ videojuego.titulo }}</strong><br>
-                Género: {{ videojuego.genero }}<br>
-                Puntuación: {{ videojuego.puntuacionM }} - {{ videojuego.puntuacionF }}<br>
-                Dificultad: {{ videojuego.dificultad }}<br>
-                Horas jugadas: {{ videojuego.horas_jugadas }}<br>
-                <a href="{% url 'editar_videojuego' videojuego.id %}">Editar</a>  <!-- Botón para editar el videojuego -->
+                <div class="contenedor">
+                    {% if videojuego.foto %}
+                        <img src="{{ videojuego.foto.url }}" alt="{{ videojuego.titulo }}">
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}audiovisuals/imagen_generica.jpg" alt="Imagen genérica">
+                    {% endif %}
+                    <div class="titulo_audiovisual">
+                        {{ videojuego.titulo }}
+                    </div><br>
+                    <div class="fecha">{{ videojuego.fecha|date:"d/m/Y" }}</div><br>
+                    <div class="genero">
+                        Género: {{ videojuego.genero }}<br>
+                    </div>
+                    <div class="puntuacion-container">
+                        <div class="puntuacion puntuacionM">{{ videojuego.puntuacionM }}</div>
+                        <div class="vs">vs.</div>
+                        <div class="puntuacion puntuacionF">{{ videojuego.puntuacionF }}</div>
+                    </div>
+                    <div class="iconos">
+                        <a href="{% url 'editar_videojuego' videojuego.id %}"><i class="fas fa-edit"></i></a>
+                        <!-- Enlace de eliminación con confirmación JavaScript -->
+                        <a href="{% url 'eliminar_videojuego' videojuego.id %}" onclick="return confirm('¿Estás seguro de que quieres eliminar este videojuego?');"><i class="fas fa-trash-alt" style="color: black;"></i></a>
+                    </div>
+                </div>
             </li>
         {% empty %}
             <li>No hay videojuegos disponibles.</li>
         {% endfor %}
     </ul>
 
-    <a href="{% url 'agregar_videojuego' %}">Añadir nuevo videojuego</a>  <!-- Botón para añadir videojuego -->
+    <a href="{% url 'agregar_videojuego' %}" class="contenedor"><i class="fas fa-plus"></i></a>
 </body>
 {% endblock %}

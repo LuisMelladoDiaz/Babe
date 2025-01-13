@@ -1,22 +1,30 @@
 {% extends 'navbar.html' %}
 
-{% block title %}Página Principal{% endblock %}
+{% block title %}Editar Película{% endblock %}
 
 {% block content %}
+{% load static %}
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Película</title>
 </head>
 <body>
-    <h1>Editar Película: {{ pelicula.titulo }}</h1>
+    <div class="container">
+        <div class="form-container">
+            <h1>Editar Película: {{ pelicula.titulo }}</h1>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar cambios</button>
-    </form>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-submit">Guardar cambios</button>
+            </form>
 
-    <a href="{% url 'lista_peliculas' %}">Volver al listado</a>
+            <a href="{% url 'lista_peliculas' %}" class="btn btn-back"><i class="fas fa-arrow-left"></i> Volver al listado</a>
+        </div>
+    </div>
 </body>
 {% endblock %}

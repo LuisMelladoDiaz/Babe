@@ -3,95 +3,15 @@
 {% block title %}Listado de Películas{% endblock %}
 
 {% block content %}
+{% load static %}
 <head>
-    <style>
-        .titulopelicula {
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            color: rgb(46, 41, 133);
-            font-size: x-large;
-            font-weight: bolder;
-            text-transform: uppercase;
-        }
-
-        .titulopelicula:first-letter {
-            font-size: xx-large;
-        }
-
-        /* Grid para 4 columnas */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 columnas */
-            gap: 20px; /* Espacio entre las tarjetas */
-            padding: 20px;
-            list-style: none;
-        }
-        .generopelicula{
-           font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-           text-transform: uppercase;
-           font-size: medium;
-        }
-        .puntuacionpelicula{
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-size: medium;
-            font-weight: bold;
-            color: rgb(52, 166, 189);
-            border-color: rgb(52, 166, 189);
-            border-style: groove;
-            border-width: 4px;
-        }
-
-        .contenedor {
-            border-radius: 10%;
-            width: 100%;
-            max-width: 300px;
-            height: 400px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 15px;
-            text-align: center;
-            background-color: #fff;
-        }
-
-        .contenedor img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover; /* Ajusta la imagen al tamaño del contenedor */
-            border-radius: 10%;
-        }
-
-        .contenedor a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .contenedor a:hover {
-            background-color: #0056b3;
-        }
-
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-                border-bottom-right-radius: 10%;
-                width: 300px;
-                height: 380px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h1>Listado de Películas</h1>
+    <div class="titulo_pagina">Películas</div>
     <ul class="grid-container">
         {% for pelicula in peliculas %}
             <li>
@@ -101,26 +21,30 @@
                     {% else %}
                         <img src="{{ MEDIA_URL }}audiovisuals/imagen_generica.jpg" alt="Imagen genérica">
                     {% endif %}
-                    <div class="titulopelicula">
-                        {{ pelicula.titulo }} 
+                    <div class="titulo_audiovisual">
+                        {{ pelicula.titulo }}
                     </div><br>
-                    {{pelicula.fecha}}<br>
-                    <div class="generopelicula">
+                    <div class="fecha">{{ pelicula.fecha|date:"d/m/Y" }}</div><br>
+                    <div class="genero">
                         {{ pelicula.genero }}<br>
                     </div>
-                    {{pelicula.cine}}<br>
-                    <div class="puntuacionpelicula">{{ pelicula.puntuacionM }} 
+                    <div class="puntuacion-container">
+                        <div class="puntuacion puntuacionM">{{ pelicula.puntuacionM }}</div>
+                        <div class="vs">vs.</div>
+                        <div class="puntuacion puntuacionF">{{ pelicula.puntuacionF }}</div>
                     </div>
-                    <div class="generopelicula"> vs. </div>
-                    <div class="puntuacionpelicula"> {{ pelicula.puntuacionF }} </div><br>
-                    <a href="{% url 'editar_pelicula' pelicula.id %}">Editar</a>  </div>
+                    <div class="iconos">
+                        <a href="{% url 'editar_pelicula' pelicula.id %}"><i class="fas fa-edit"></i></a>
+                        <!-- Enlace de eliminación con confirmación JavaScript -->
+                        <a href="{% url 'eliminar_pelicula' pelicula.id %}" onclick="return confirm('¿Estás seguro de que quieres eliminar esta película?');"><i class="fas fa-trash-alt" style="color: black;"></i></a>
+                    </div>
+                </div>
             </li>
         {% empty %}
             <li>No hay películas disponibles.</li>
         {% endfor %}
     </ul>
 
-    <!-- Botón para añadir película -->
-    <a href="{% url 'agregar_pelicula' %}" class="contenedor">Añadir nueva película</a>
+    <a href="{% url 'agregar_pelicula' %}" class="boton_añadir"><i class="fas fa-plus"></i></a>
 </body>
 {% endblock %}
