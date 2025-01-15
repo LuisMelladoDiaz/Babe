@@ -1,0 +1,169 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .titulo_pagina {
+        font-size: 2rem;
+        text-align: center;
+        margin: 20px 0;
+        margin-top: 60px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .tarjeta-recuerdo {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background: #fff;
+        margin-top: -25px;
+    }
+
+    .titulo_audiovisual {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .fecha {
+        font-size: 0.9rem;
+    }
+
+    .descripcion {
+        margin: 10px 0;
+        height: 120px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        text-align: justify;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .carrusel-contenedor {
+        width: 100%;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .foto-contenedor img, .foto-contenedor video {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-left: 60px;
+    }
+
+    .iconos {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 15px;
+    }
+
+    .iconos i {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: black;
+    }
+
+    .boton-crear {
+        display: block;
+        text-align: center;
+        padding: 10px 20px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        margin: 20px auto;
+        width: fit-content;
+    }
+
+    .boton-crear:hover {
+        background: #218838;
+    }
+</style>
+<h1 class="titulo_pagina">Recuerdos</h1>
+<div class="grid-container">
+    {% for recuerdo in recuerdos %}
+    <div class="tarjeta-recuerdo">
+        <div class="titulo_audiovisual">{{ recuerdo.titulo }}</div>
+        <div class="fecha">{{ recuerdo.fecha }}</div>
+        <p class="descripcion">{{ recuerdo.descripcion }}</p>
+
+        <div class="carrusel-contenedor">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    {% for archivo in recuerdo.archivos.all %}
+                        <div class="swiper-slide foto-contenedor">
+                            {% if archivo.tipo == 'foto' %}
+                                <img src="{{ archivo.archivo.url }}" alt="Foto del recuerdo">
+                            {% elif archivo.tipo == 'video' %}
+                                <video controls>
+                                    <source src="{{ archivo.archivo.url }}" type="video/mp4">
+                                    Tu navegador no soporta videos.
+                                </video>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <div class="iconos">
+            <a href="{% url 'editar_recuerdo' recuerdo.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'eliminar_recuerdo' recuerdo.id %}"><i class="fas fa-trash-alt"></i></a>
+        </div>
+    </div>
+    {% empty %}
+    <p>No hay recuerdos disponibles.</p>
+    {% endfor %}
+</div>
+
+<!-- Botón para añadir un nuevo recuerdo -->
+<a href="{% url 'crear_recuerdo' %}" class="boton-crear"><i class="fas fa-plus"></i> Añadir Recuerdo</a>
+
+<!-- Inicialización del carrusel -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 10,
+        slidesPerView: 1,
+        loop: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
+{% endblock %}

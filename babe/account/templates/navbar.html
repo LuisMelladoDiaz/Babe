@@ -21,6 +21,7 @@
             background-color: #333;
             z-index: 1000; /* Asegura que la barra esté siempre por encima del contenido */
             overflow: hidden;
+            height: 48px;
         }
 
         .navbar a {
@@ -63,8 +64,9 @@
     <!-- Barra de navegación -->
     <div class="navbar">
         <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'lista_videojuegos' %}">Videojuegos</a>
+        <a href="{% url 'lista_recuerdos' %}">Recuerdos</a>
         <a href="{% url 'lista_peliculas' %}">Películas</a>
+        <a href="{% url 'lista_videojuegos' %}">Videojuegos</a>
         <div class="user-greeting">
             {% if profile.foto %}
                 <img src="{{ profile.foto.url }}" alt="Foto de perfil">

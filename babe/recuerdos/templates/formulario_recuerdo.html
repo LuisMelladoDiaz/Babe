@@ -1,0 +1,124 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+<style>
+    /* Estilo base */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fc;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Contenedor del formulario */
+    .form-container {
+        background-color: #fff;
+        padding: 20px 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+        margin: 20px;
+        margin-top: 500px;
+    }
+
+    /* Título */
+    .form-title {
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Estilo para los grupos de formularios */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    h3.section-title {
+        font-size: 20px;
+        color: #555;
+        margin-top: 20px;
+    }
+
+    /* Estilo de los botones */
+    button, a.btn {
+        text-align: center;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    a.btn-cancel {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        margin-left: 10px;
+    }
+
+    a.btn-cancel:hover {
+        background-color: #e53935;
+    }
+
+    /* Estilo para los campos de entrada de archivo */
+    .file-input input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Espaciado y estilo para el formulario */
+    .recuerdo-form p {
+        margin: 10px 0;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+</style>
+    <div class="form-container">
+        <h1 class="form-title">{% if object %}Editar{% else %}Crear{% endif %} Recuerdo</h1>
+        <form method="post" enctype="multipart/form-data" class="recuerdo-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+
+            <h3 class="section-title">Archivos</h3>
+            {{ formset.management_form }}
+            <div class="form-group">
+                {% for form in formset %}
+                    <div class="file-input">
+                        {{ form.as_p }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="{% url 'lista_recuerdos' %}" class="btn btn-cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+    
+{% endblock %}
